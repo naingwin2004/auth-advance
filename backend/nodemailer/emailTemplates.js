@@ -93,3 +93,30 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 </body>
 </html>
 `;
+export const WELCOME_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Email</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333; background-color: #f4f4f4; padding: 20px;">
+  <div style="max-width: 600px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+    <h2 style="color: #4CAF50;">Welcome to Auth-Advance!</h2>
+        <img src="https://github.com/naingwin2004.png" alt="Company Logo" style="width: 150px; height: auto; margin-bottom: 20px;">
+    <p style="font-size: 16px; line-height: 1.5;">Hello <strong>[Username]</strong>,</p>
+    <p style="font-size: 16px; line-height: 1.5;">
+      We’re excited to have you on board. Welcome to <strong>Auth-Advance!</strong> Our team is committed to making sure you have the best experience possible.
+    </p>
+    <p style="font-size: 16px; line-height: 1.5;">
+      You can get started by visiting your dashboard where you’ll find all the resources you need to begin.
+    </p>
+    <a href="[Link]" style="display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 5px; text-align: center;">Go to Dashboard</a>
+    <p style="font-size: 14px; color: #555; margin-top: 20px;">If you have any questions, feel free to reach out to our support team at [support@company.com].</p>
+    <p style="font-size: 14px; color: #555;">Best Regards,<br>Auth-Advance Team</p>
+  </div>
+</body>
+</html>
+`
