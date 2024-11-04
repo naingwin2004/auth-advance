@@ -43,7 +43,7 @@ export const signup = async (req, res) => {
 
 		await user.save();
 		//jwt
-		generateTokenandSetCookie(res, user._id);
+		await generateTokenandSetCookie(res, user._id);
 
 		await sendVerificationEmail(user.email, verificationToken);
 
@@ -104,7 +104,7 @@ export const login = async (req, res) => {
 		if (!user) {
 			return res
 				.status(400)
-				.json({ success: false, message: "Invalid credential" });
+				.json({ success: false, message:"User was not found" });
 		}
 
 		const isValidPassword = await bcryptjs.compare(password, user.password);
@@ -182,7 +182,7 @@ export const resetPassword = async (req, res) => {
 		}
 		const hashedPassword = await bcryptjs.hash(password, 10);
 		user.password = hashedPassword;
-		
+
 		user.resetPasswordToken = undefined;
 		user.resetPasswordExpiresAt = undefined;
 		await user.save();
@@ -207,7 +207,6 @@ export const checkAuth = async (req, res) => {
 				.status(400)
 				.json({ success: false, message: "User not found" });
 		}
-
 		res.status(201).json({ success: true, message: "checkAuth ok!", user });
 	} catch (error) {
 		console.log("Error in checkAuth : ", error);

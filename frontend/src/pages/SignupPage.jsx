@@ -1,11 +1,12 @@
+import { z } from "zod";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { Loader, Lock, Mail, User } from "lucide-react";
-import { z } from "zod";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader, Lock, Mail, User } from "lucide-react";
 
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter.jsx";
+import { useAuthStore } from "../store/authStore.js";
 
 const userSchema = z.object({
 	name: z.string().nonempty("User name is required"),
@@ -26,14 +27,20 @@ const SignupPage = () => {
 		watch,
 		formState: { errors },
 	} = useForm({ resolver: zodResolver(userSchema) });
-
 	const userPassword = watch("password");
 
-	const singupform = (data) => {
-		console.log(data);
-	};
+	const { signup, isLoading, error } = useAuthStore();
 
-	const isLoading = false;
+	const navigate = useNavigate();
+	const singupform = async (data) => {
+		const { email, password, name } = data;
+		try {
+			await signup(email, password, name);
+			navigate("/verify-email");
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className='h-screen flex justify-center items-center'>
@@ -41,7 +48,7 @@ const SignupPage = () => {
 				initial={{ y: 20, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ duration: 0.8 }}
-				className=' max-w-3xl w-full mx-3 bg-cappuccino-dark bg-opacity-80  backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
+				className=' max-w-2xl w-full mx-3 bg-cappuccino-dark bg-opacity-80  backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
 				<div className='p-8'>
 					<h2 className='text-3xl font-bold mb-6 text-center text-cappuccino-beige'>
 						Create Account
@@ -100,6 +107,11 @@ const SignupPage = () => {
 								/>
 							</div>
 						</div>
+						{error && (
+							<p className='text-sm text-red-500 text-center mt-2'>
+								{error}
+							</p>
+						)}
 						<PasswordStrengthMeter password={userPassword} />
 						<motion.button
 							className='mt-5 w-full py-2 px-4 rounded-lg focus:border-cappuccino-dark focus:ring-2 focus:ring-cappuccino-dark text-white placeholder-cappuccino-dark transition duration-200 text-white outline-cappuccino-red shadow-lg hover:bg-cappuccino-brown bg-cappuccino-beige font-bold'

@@ -1,17 +1,33 @@
 import { useState } from "react";
-
+import { Loader } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
+import { useAuthStore } from "../store/authStore.js";
+import toast from "react-hot-toast";
 
 const VerifyEmailPage = () => {
 	const [otp, setOtp] = useState("");
-
+	
+	const navigate = useNavigate();
+	
+	const { verifyEmail, isLoading, error } = useAuthStore();
+	
 	const handlePaste = (event) => {
 		const data = event.clipboardData.getData("text");
 		console.log(data);
 	};
 
-	const isLoading = false;
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			await verifyEmail(otp);
+			toast.success("Email verified successfully");
+			navigate("/");
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className='h-screen flex justify-center items-center'>
@@ -19,12 +35,17 @@ const VerifyEmailPage = () => {
 				initial={{ y: -20, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ duration: 0.8 }}
-				className='max-w-3xl w-full mx-3 bg-cappuccino-dark bg-opacity-80 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
+				className='max-w-2xl w-full mx-3 bg-cappuccino-dark bg-opacity-80 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
 				<div className='p-8'>
 					<h2 className='text-3xl font-bold mb-6 text-center text-cappuccino-beige'>
 						Verify Your Email
 					</h2>
-					<form onSubmit={(e) => e.preventDefault()}>
+					{error && (
+						<p className='text-sm text-red-500 text-center mt-2'>
+							{error}
+						</p>
+					)}
+					<form onSubmit={(e) => handleSubmit(e)}>
 						<div className='py-2 flex justify-center items-center space-x-2'>
 							<OtpInput
 								value={otp}
