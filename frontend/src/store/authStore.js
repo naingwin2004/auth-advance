@@ -34,7 +34,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	
+
 	login: async (email, password) => {
 		set({ isLoading: true, error: null });
 		try {
@@ -56,7 +56,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	
+
 	logout: async () => {
 		set({ isLoading: true, error: null });
 		try {
@@ -67,13 +67,13 @@ export const useAuthStore = create((set) => ({
 				error: null,
 				isAuthenticated: false,
 			});
-			return response.data
+			return response.data;
 		} catch (error) {
 			set({ error: "Error logging out", isLoading: false });
 			throw error;
 		}
 	},
-	
+
 	verifyEmail: async (code) => {
 		set({ isLoading: true, error: null });
 		try {
@@ -94,7 +94,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	
+
 	checkAuth: async () => {
 		set({ isCheckingAuth: true, error: null });
 		try {
@@ -106,6 +106,47 @@ export const useAuthStore = create((set) => ({
 			});
 		} catch (error) {
 			set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+		}
+	},
+	forgotPassword: async (email) => {
+		set({ error: null, isLoading: true, message: null });
+		try {
+			const response = await axios.post(`${API_URL}/forgot-password`, {
+				email,
+			});
+			set({
+				message: response.data.message || "email send successfully",
+				isLoading: false,
+			});
+			return response.data;
+		} catch (error) {
+			set({
+				isLoading: false,
+				error: error.response.data.message || "Error in forgotPassword",
+			});
+			throw error;
+		}
+	},
+	resetPassword: async (token, password) => {
+		set({ error: null, isLoading: true, message: null });
+		try {
+			const response = await axios.post(
+				`${API_URL}/reset-password/${token}`,
+				{
+					password,
+				},
+			);
+			set({
+				message: response.data.message || "email send successfully",
+				isLoading: false,
+			});
+			return response.data;
+		} catch (error) {
+			set({
+				isLoading: false,
+				error: error.response.data.message || "Error in ResetPassword",
+			});
+			throw error;
 		}
 	},
 }));

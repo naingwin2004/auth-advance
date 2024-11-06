@@ -9,7 +9,7 @@ import { useAuthStore } from "../store/authStore.js";
 
 const LoginPage = () => {
 	const userSchema = z.object({
-		email: z.string().email("invalid"),
+		email: z.string().email(),
 		password: z.string(),
 	});
 
@@ -45,6 +45,11 @@ const LoginPage = () => {
 					</h2>
 					<form onSubmit={handleSubmit(loginForm)}>
 						<div className='flex flex-col gap-3'>
+							{errors.email && (
+								<p className='text-sm text-red-500'>
+									{errors.email.message}
+								</p>
+							)}
 							<div className='relative'>
 								<div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
 									<Mail className='size-5 text-cappuccino-red' />

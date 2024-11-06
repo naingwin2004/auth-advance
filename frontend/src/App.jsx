@@ -11,6 +11,8 @@ import {
 	LoginPage,
 	VerifyEmailPage,
 	DashboardPage,
+	ForgotPasswordPage,
+	ResetPasswordPage,
 } from "./pages/index.js";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import { useAuthStore } from "./store/authStore.js";
@@ -76,9 +78,21 @@ const router = createBrowserRouter([
 			</RedirectAuthenticatedUser>
 		),
 	},
-	{ path: "/verify-email", element: <VerifyEmailPage /> },
-	{ path: "/forgot-password", element: "forgot-password" },
-	{ path: "/reset-password/:token", element: "reset-password" },
+	{ path: "/verify-email", element:
+		<RedirectAuthenticatedUser>
+	<VerifyEmailPage />
+		</RedirectAuthenticatedUser>},
+	{
+		path: "/forgot-password",
+		element: (
+			<RedirectAuthenticatedUser>
+				<ForgotPasswordPage />
+			</RedirectAuthenticatedUser>
+		),
+	},
+	{ path: "/reset-password/:token", element: 			<RedirectAuthenticatedUser>
+				<ResetPasswordPage />
+			</RedirectAuthenticatedUser> },
 ]);
 
 const App = () => {
