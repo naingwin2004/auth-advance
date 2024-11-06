@@ -78,10 +78,14 @@ const router = createBrowserRouter([
 			</RedirectAuthenticatedUser>
 		),
 	},
-	{ path: "/verify-email", element:
-		<RedirectAuthenticatedUser>
-	<VerifyEmailPage />
-		</RedirectAuthenticatedUser>},
+	{
+		path: "/verify-email",
+		element: (
+			<RedirectAuthenticatedUser>
+				<VerifyEmailPage />
+			</RedirectAuthenticatedUser>
+		),
+	},
 	{
 		path: "/forgot-password",
 		element: (
@@ -90,9 +94,15 @@ const router = createBrowserRouter([
 			</RedirectAuthenticatedUser>
 		),
 	},
-	{ path: "/reset-password/:token", element: 			<RedirectAuthenticatedUser>
+	{
+		path: "/reset-password/:token",
+		element: (
+			<RedirectAuthenticatedUser>
 				<ResetPasswordPage />
-			</RedirectAuthenticatedUser> },
+			</RedirectAuthenticatedUser>
+		),
+	},
+	{ path: "*", element: <Navigate to='/' replace/> },
 ]);
 
 const App = () => {
