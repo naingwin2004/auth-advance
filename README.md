@@ -1,10 +1,12 @@
+## Description  
+This project was developed entirely using a mobile phone. While the UI/UX might not be as polished as applications built on a desktop. I apologize for any language mistakes.
 
-## Project Title
+### Purpose  
+This app serves as a learning project for MERN technologies, including:  
+- React , Zustand  
+- MongoDB , Mongoose  
+- Express  , JWT
+- Advanced authentication & authorization methods  
 
-This project was making with mobile phone only.While the UI/UX might not be as polished as a desktop-built application but I have tried my best.Sorry for my bad English, and thank you for reading this `README.md`
-
-### Tool
-```
-Acode + Termux
-```
-- This app is for my learning backend, such as MongoDB, Mongoose, Express, & Auth-advance
+### Note  
+This app prioritizes mobile compatibility because it was coded entirely on a mobile device.
